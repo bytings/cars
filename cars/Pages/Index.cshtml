@@ -1,0 +1,121 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p class="display-4">Guess the price</p>
+    <select name="DataType" id="DataType" asp-items="Model.Options" onChange=SelectedIndexChanged(this) style="display:@(Model.control == null ? "inline" : "none")">
+        <option value="">Pick one</option>
+    </select>
+
+    @foreach (var car in Model.Cars)
+    {
+        <div id="@car.Id" class="mask" style="display:none">
+            <form method="post">
+                <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-7"></div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3">
+                            <label asp-for="Car.Make" class="form-label"></label>
+                        </div>
+                        <div class="col-9">
+                            <input asp-for="Car.Make" class="form-control" value="@car.Make" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3">
+                            <label asp-for="Car.Model" class="form-label"></label>
+                        </div>
+                        <div class="col-9">
+                            <input asp-for="Car.Model" class="form-control" value="@car.Model" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3">
+                            <label asp-for="Car.Year" class="form-label"></label>
+                        </div>
+                        <div class="col-9">
+                            <input asp-for="Car.Year" class="form-control" value="@car.Year" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3">
+                            <label asp-for="Car.Doors" class="form-label"></label>
+                        </div>
+                        <div class="col-9">
+                            <input asp-for="Car.Doors" class="form-control" value="@car.Doors" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3">
+                            <label asp-for="Car.Color" class="form-label"></label>
+                        </div>
+                        <div class="col-9">
+                            <input asp-for="Car.Color" class="form-control" value="@car.Color" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3">
+                            <label asp-for="Car.Price" class="form-label"></label>
+                        </div>
+                        <div class="col-9">
+                            <input asp-for="Car.Price" class="form-control" value="@car.Price" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3">
+                            <label class="form-label">FillIn</label>
+                        </div>
+                        <div class="col-9">
+                            <input type="number" asp-for="GuessValue" class="form-control" onclick="this.select();" />
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-success">Submit</button>
+            </form>
+        </div>
+
+    }
+
+    <div style="display:@(Model.Result != null ? "block" : "none")">        
+        <div class="row">
+            <label style="color:@(Model.control == true  ? "green" : "red")"><h1>@Model.Result</h1></label>
+        </div>
+        <div class="row">
+            <label>If you want to try again please click on the home menu option </label>
+        </div>
+        
+    </div>
+</div>
+
+<script type="text/javascript">
+    function SelectedIndexChanged(div) {
+        var hidemask = document.querySelectorAll(".mask");
+
+        for (var i = 0; i < hidemask.length; i++) {
+            hidemask[i].style.display = "none";
+        }
+        var divVisible = document.getElementById(div.value);
+        divVisible.style.display = "inline";
+    }
+</script>
+
